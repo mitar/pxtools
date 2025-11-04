@@ -325,17 +325,7 @@ int PXtoQuotedString(char *dst, const unsigned char *src, int type) {
 	}
 	
 	while(*src) {
-		switch(*src) {
-/* cp431(??) -> latin1 */
-			case 0x81: *dst = 'ü'; break;
-			case 0x84: *dst = 'ä'; break;
-			case 0x8e: *dst = 'Ä'; break;
-			case 0x94: *dst = 'ö'; break;
-			case 0x99: *dst = 'Ö'; break;
-			case 0x9a: *dst = 'Ü'; break;
-			case 0xe1: *dst = 'ß'; break;
-			default: *dst = *src;
-		}
+		*dst = *src;
 		dst++;
 		src++;
 	}
@@ -344,21 +334,6 @@ int PXtoQuotedString(char *dst, const unsigned char *src, int type) {
 }
 
 char *PXNametoQuotedName(char *str) {
-	unsigned char *s = str;
-	while(*s) {
-		switch(*s) {
-			case 0x81: *s = 'ü'; break;
-			case 0x84: *s = 'ä'; break;
-			case 0x8e: *s = 'Ä'; break;
-			case 0x94: *s = 'ö'; break;
-			case 0x99: *s = 'Ö'; break;
-			case 0x9a: *s = 'Ü'; break;
-			case 0xe1: *s = 'ß'; break;
-			case 0x20: *s = '_'; break;
-			case '-' : *s = '_'; break;
-		}
-		s++;
-	}
 	return str;
 }
 
