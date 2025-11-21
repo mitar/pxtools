@@ -29,6 +29,8 @@ Makefile.in
 
 pxtools.spec
 
+po/POTFILES
+
 src/pxcsvdump
 src/pxinfo
 src/pxsqldump
