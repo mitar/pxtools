@@ -77,13 +77,11 @@ int create_xml_line(px_header *header, px_fieldInfo **felder, px_records block, 
 			free(str);
     } else if (felder[i]->type == PX_Field_Type_BCD) {
       char *str = malloc(felder[i]->size + 1);
-			
-      fprintf(stderr,"aslhföasdhfsadbf\n"),
-			
-	BLOCK_COPY(str, felder[i]->size);
-			
+
+      BLOCK_COPY(str, felder[i]->size);
+
       printf("%s", str);
-			
+
       free(str);
     } else if (felder[i]->type == PX_Field_Type_ShortInt) {
       unsigned short s;
