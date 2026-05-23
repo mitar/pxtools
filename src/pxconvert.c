@@ -364,15 +364,15 @@ char *PXMEMOtoString(void *blob, int size, char *blobname) {
 	copy_from_le(&offset, (char *)blob+(size-10), 4);
 	copy_from_le(&length, (char *)blob+(size-6), 4);
 	copy_from_le(&mod_number, (char *)blob+(size-2), 2);
-	
+
 	copy_from_le(&index, (char *)blob+(size-10), 1);
-	
+
 	offset &= 0xffffff00;
-#ifdef DEBUG	
+#ifdef DEBUG
 	fprintf(stderr, "[BLOB] offset: %08lx, length: %08lx, mod_number: %04x, index: %02x\n", offset, length, mod_number, index);
 #endif
-	if (index == 0x00) return NULL;
-	
+	if (offset == 0) return NULL;
+
 	if (!blobname) {
 		fprintf(stderr, "[BLOB] offset: %08lx, length: %08lx, mod_number: %04x, index: %02x - do I need a BLOB-filename '-b ...' ?\n", offset, length, mod_number, index);
 		return NULL;
@@ -383,7 +383,7 @@ char *PXMEMOtoString(void *blob, int size, char *blobname) {
 	fd = open(blobname, O_RDONLY);
 #endif
 	if (fd == -1) return NULL;
-	
+
 	if (index == 0xff) {
 		/* type 02 block */
 		mb_type2_pointer idx;
@@ -480,14 +480,14 @@ int PXBLOBtoBinary(void *blob, int size, char *blobname, void ** binstorage, int
 	copy_from_le(&offset, (char *)blob+(size-10), 4);
 	copy_from_le(&length, (char *)blob+(size-6), 4);
 	copy_from_le(&mod_number, (char *)blob+(size-2), 2);
-	
+
 	copy_from_le(&index, (char *)blob+(size-10), 1);
-	
+
 	offset &= 0xffffff00;
-#ifdef DEBUG	
+#ifdef DEBUG
 	fprintf(stderr, "[BLOB] offset: %08lx, length: %08lx, mod_number: %04x, index: %02x\n", offset, length, mod_number, index);
 #endif
-	if (index == 0x00) return 0;
+	if (offset == 0) return 0;
 	
 	if (!blobname) {
 		fprintf(stderr, "[BLOB] offset: %08lx, length: %08lx, mod_number: %04x, index: %02x - do I need a BLOB-filename '-b ...' ?\n", offset, length, mod_number, index);
