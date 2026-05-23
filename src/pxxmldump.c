@@ -25,7 +25,7 @@ const char *tags [] = {
   "logical",
   "timestamp",
   "incremental",
-  "bcd"
+  "bcd",
   "time",
 };
 
