@@ -447,7 +447,8 @@ char * str_to_sql(const unsigned char *src)
 	
 char * binary_to_sql(const unsigned char *src, int src_len, int *dst_len)
 {
-	unsigned int i, add;
+	int i;
+	unsigned int j, add;
 	char * dst = NULL;
 
   /* count the numbers of ' */
@@ -457,14 +458,14 @@ char * binary_to_sql(const unsigned char *src, int src_len, int *dst_len)
 		    src[i] == '\\') add++;
 	}
 
-	dst = malloc((i + add) * sizeof(char));
-	*dst_len = i + add;
+	dst = malloc((src_len + add) * sizeof(char));
+	*dst_len = src_len + add;
 
-	for (i = 0; i < src_len; src++)
+	for (i = 0, j = 0; i < src_len; i++)
 	{
 		unsigned int c = 0;
 
-		if (*src == '\'')
+		if (src[i] == '\'')
 		{
 			switch (dbtype)
 			{
@@ -472,7 +473,7 @@ char * binary_to_sql(const unsigned char *src, int src_len, int *dst_len)
 			    case DB_MYSQL: c = '\\'; break;
 			}
 		}
-		if (*src == '\\')
+		if (src[i] == '\\')
 		{
 			switch (dbtype)
 			{
@@ -482,9 +483,9 @@ char * binary_to_sql(const unsigned char *src, int src_len, int *dst_len)
 		}
 
 		if (c)
-			dst[i++] = c;
+			dst[j++] = c;
 
-		dst[i++] = *src;
+		dst[j++] = src[i];
 	}
 
 	return dst;
